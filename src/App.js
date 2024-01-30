@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import "./App.css";
+import TableDisplay from "./components/TableDisplay";
+import SpecialButton from "./components/SpecialButton";
+import ButtonExample from "./components/ButtonExample";
 
 function App() {
   // let number = 5
@@ -7,64 +10,40 @@ function App() {
   const [userArray, setUserArray] = useState([]);
   const [firstName, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("Male");
   const [password, setPassword] = useState("");
-
-  const [message, setMessage] = useState("Lillian and Red");
-  let names = "Adebisi";
-  function changeNumber(event) {
-    console.log(event.target.value)
-    console.log(names, message);
-    names = "Rex";
-    setMessage("Lillian and Her Laptop")
-    console.log(names, message);
-  }
-
-  const handleInputChange=()=>{
-
-  }
-
 
   const handleSubmit = () => {
     const userObject = { firstName, lastname, password, gender };
-
-    setUserArray( [...userArray, userObject]);
+    console.log(userObject)
+    setUserArray([...userArray, userObject]);
+    setFirstName("")
     // console.log(userArray);
   };
 
   return (
     <div className='App'>
       <header className='App-header'>
-        <div className='mb-3 min-vh-100'>
-          <h1 className=''>Hello Lillian</h1>
-          <h2>
-            {message}|||||||| {names} Good
-          </h2>
-          <button
-            className='btn btn-danger'
-            onClick={(event) => changeNumber(event)}
-          >
-            {" "}
-            Count
-          </button>
-        </div>
         <div className='col-7 mx-auto border bg-dark p-4 rounded-3 mb-3'>
-          <h1 className="text-white">{firstName}</h1>
+          <h1 className='text-white'>{firstName}</h1>
           <input
             type='text'
             placeholder='First Name'
             className='form-control mb-3'
+            value={firstName}
             onChange={(event) => setFirstName(event.target.value)}
           />
           <input
             type='text'
             placeholder='Last Name'
             className='form-control mb-3'
+            value={lastname}
             onChange={(event) => setLastName(event.target.value)}
           />
           <select
             onChange={(event) => setGender(event.target.value)}
             placeholder='Gender'
+            value={gender}
             className='form-select mb-3'
           >
             <option value='0'>--</option>
@@ -76,38 +55,29 @@ function App() {
           <input
             onChange={(event) => setPassword(event.target.value)}
             type='password'
+            value={password}
             className='form-control mb-3'
           />
-          <button
-            onClick={handleSubmit}
-            className='btn btn-danger form-control'
-          >
-            Submit
-          </button>
+          <SpecialButton name='Submit' color='btn-warning  form-control' functionToRun={handleSubmit} />
         </div>
 
         <div>
-          <table className='table table-warning'>
-            <thead>
-              <tr>
-                <th>S/N</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Gender</th>
-              </tr>
-            </thead>
-            <tbody>
-              {userArray.map((item, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{item.firstName}</td>
-                  <td>{item.lastname}</td>
-                  <td>{item.gender}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <TableDisplay userArray={userArray} name='lillian' />
         </div>
+
+        <SpecialButton
+          name='Send Mail'
+          functionToRun={() => console.log("special button running")}
+          color='btn-danger'
+        />
+        <SpecialButton
+          name='Delete User'
+          functionToRun={() => console.log("special button running")}
+          color='btn-warning'
+        />
+
+        <ButtonExample > Hello World </ButtonExample>
+        <ButtonExample> Click for free! </ButtonExample>
       </header>
     </div>
   );
